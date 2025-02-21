@@ -1,0 +1,14 @@
+
+
+{% block title %}Page en Construction{% endblock %}
+
+{% block body %}
+    <h1>Cette page est en cours de développement</h1>
+    <p>Nous travaillons actuellement sur cette fonctionnalité. Merci de votre compréhension.</p>
+{% endblock %}
+
+<a href="{{ path('home') }}">Accueil</a>
+<form action="{{ path('recherche_recette') }}" method="GET" class="search-form">
+    <input type="text" name="query" placeholder="Rechercher une recette..." required>
+    <button type="submit">Rechercher</button>
+</form>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultat de Recherche</title>
+    <link rel="stylesheet" href="{{ asset('css/Acceuil.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="{{ path('home') }}">Accueil</a></li>
+                <li><a href="{{ path('ajouter_recette') }}">Ajouter une recette</a></li>
+                <li><a href="{{ path('mes_recettes') }}">Mes Recettes</a></li>
+                <li><a href="{{ path('filtrer_recettes') }}">Filtrer</a></li>
+            </ul>
+            <form action="{{ path('recherche_recette') }}" method="GET" class="search-form">
+                <input type="text" name="query" placeholder="Rechercher une recette..." required>
+                <button type="submit">Rechercher</button>
+            </form>
+            <div class="auth-links">
+                    {% if app.user %}
+                    <a href="{{ path('app_logout') }}">Déconnexion</a>
+                {% else %}
+                    <a href="{{ path('app_login') }}">Connexion</a>
+                       <a href="{{ path('app_register') }}">Inscription</a>
+                {% endif %}
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container-main">
+            <h2>Résultats de la recherche</h2>
+
+            {% if recettes is not empty %}
+                <div class="recette-grid">
+                    {% for recette in recettes %}
+                        <div class="recette-card">
+                            <img src="{{ asset('uploads/images/recettes/' ~ recette.imageName) }}" alt="{{ recette.titre }}">
+                            <div class="recette-content">
+                                <h3>{{ recette.titre }}</h3>
+                                <p>{{ recette.description }}</p>
+                                <p><strong>Préparation :</strong> {{ recette.tempsPreparation }} min</p>
+                                <p><strong>Cuisson :</strong> {{ recette.tempsCuisson }} min</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>Aucune recette trouvée avec ces critères.</p>
+            {% endif %}
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2025 Recettes Délicieuses. Tous droits réservés.</p>
+    </footer>
+
+</body>
+</html>

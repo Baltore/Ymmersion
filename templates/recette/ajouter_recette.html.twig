@@ -1,0 +1,123 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Ajouter une recette</title>
+        <link rel="stylesheet" href="{{ asset('css/ajout.css') }}">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    </head>
+    <body>
+    <header>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="{{ path('home') }}">Accueil</a></li>
+                    <li><a href="{{ path('ajouter_recette') }}">Ajouter une recette</a></li>
+                    <li><a href="{{ path('mes_recettes') }}">Mes Recettes</a></li>
+                    <li><a href="{{ path('filtrer_recettes') }}">Filtrer</a></li>
+                </ul>
+                <form action="{{ path('recherche_recette') }}" method="GET" class="search-form">
+                    <input type="text" name="query" placeholder="Rechercher une recette..." required>
+                    <button type="submit">Rechercher</button>
+                </form>
+                <div class="auth-links">
+                    {% if app.user %}
+                        <a href="{{ path('app_logout') }}">Déconnexion</a>
+                    {% else %}
+                        <a href="{{ path('app_login') }}">Connexion</a>
+                        <a href="{{ path('app_register') }}">Inscription</a>
+                    {% endif %}
+                </div>
+            </nav>
+        </header>
+        <main>
+            <div class="form-container">
+                <h2>Ajouter une nouvelle recette</h2>
+
+                <form method="post" class="form-s" enctype="multipart/form-data">
+                    {{ form_start(form) }}
+                    <div>{{ form_row(form.titre) }}</div>
+                    <div>{{ form_row(form.description) }}</div>
+                    <div>
+                        {{ form_row(form.tempsPreparation) }}
+                        {{ form_row(form.tempsCuisson) }}
+                        {{ form_row(form.portions) }}
+                    </div>
+
+                    <label for="ingredients">Ingrédients :</label>
+                        <select name="ingredients[]" id="ingredients" multiple>
+                            {% for ingredient in ingredients %}
+                                <option value="{{ ingredient.id }}">{{ ingredient.nom }}</option>
+                            {% endfor %}
+                        </select>
+
+                        <div id="ingredient-fields"></div>
+
+                    <div>{{ form_row(form.imageFile) }}</div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Ajouter la recette</button>
+                    </div>
+
+                    {{ form_end(form) }}
+                </form>
+            </div>
+        </main>
+
+    <footer>
+        <p>&copy; 2025 Recettes Délicieuses. Tous droits réservés.</p>
+    </footer>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            generateIngredientFields();
+        });
+
+        function generateIngredientFields() {
+            let container = document.getElementById("ingredient-fields");
+            let nbIngredients = document.getElementById("nb_ingredients").value;
+            container.innerHTML = ""; 
+
+            for (let i = 0; i < nbIngredients; i++) {
+                let div = document.createElement("div");
+                div.classList.add("ingredient-group");
+
+                // Sélecteur d'ingrédient
+                let label = document.createElement("label");
+                label.innerText = "Ingrédient " + (i + 1) + " :";
+                div.appendChild(label);
+
+                let select = document.createElement("select");
+                select.name = "ingredients[]";
+                select.required = true;
+
+                // Liste des ingrédients récupérés depuis la base de données
+                let ingredients = {{ ingredients|json_encode|raw }};
+                ingredients.forEach(ingredient => {
+                    let option = document.createElement("option");
+                    option.value = ingredient.id;
+                    option.text = ingredient.nom;
+                    select.appendChild(option);
+                });
+
+                div.appendChild(select);
+
+                // Champ de quantité
+                let quantityLabel = document.createElement("label");
+                quantityLabel.innerText = "Quantité :";
+                div.appendChild(quantityLabel);
+
+                let quantityInput = document.createElement("input");
+                quantityInput.type = "number";
+                quantityInput.name = "quantites[]";
+                quantityInput.min = "1";
+                quantityInput.required = true;
+                div.appendChild(quantityInput);
+
+                container.appendChild(div);
+            }
+        }
+        </script>
+
+</body>
+</html>

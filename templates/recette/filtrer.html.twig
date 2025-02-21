@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Filtrer les Recettes</title>
+        <link rel="stylesheet" href="{{ asset('css/filtrer.css') }}">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    </head>
+    <body>
+    <header>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="{{ path('home') }}">Accueil</a></li>
+                    <li><a href="{{ path('ajouter_recette') }}">Ajouter une recette</a></li>
+                    <li><a href="{{ path('mes_recettes') }}">Mes Recettes</a></li>
+                    <li><a href="{{ path('filtrer_recettes') }}">Filtrer</a></li>
+                </ul>
+                <form action="{{ path('recherche_recette') }}" method="GET" class="search-form">
+                    <input type="text" name="query" placeholder="Rechercher une recette..." required>
+                    <button type="submit">Rechercher</button>
+                </form>
+                <div class="auth-links">
+                    {% if app.user %}
+                        <a href="{{ path('app_logout') }}">Déconnexion</a>
+                    {% else %}
+                        <a href="{{ path('app_login') }}">Connexion</a>
+                        <a href="{{ path('app_register') }}">Inscription</a>
+                    {% endif %}
+                </div>
+            </nav>
+        </header>
+
+
+    <main>
+         <div class="container-main">
+            <h2>Filtrer les Recettes</h2>
+
+            <form action="{{ path('resultats_filtrer') }}" method="GET" class="form-s">
+                <!-- Filtre par Temps de préparation -->
+                <label for="temps_preparation">Temps de préparation (max en min) :</label>
+                <input type="number" id="temps_preparation" name="temps_preparation" min="0" placeholder="Ex : 30">
+
+                <!-- Filtre par Ingrédients -->
+                <label for="ingredients">Ingrédients :</label>
+                <select name="ingredients[]" id="ingredients" multiple>
+                    {% for ingredient in ingredients %}
+                        <option value="{{ ingredient.id }}">{{ ingredient.nom }}</option>
+                    {% endfor %}
+                </select>
+
+                <!-- Bouton de Recherche -->
+                <button type="submit">Rechercher</button>
+            </form>
+
+            <p>Sélectionnez des critères et cliquez sur "Rechercher" pour voir les recettes correspondantes.</p>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Recettes Délicieuses. Tous droits réservés.</p>
+    </footer>
+
+</body>
+</html>

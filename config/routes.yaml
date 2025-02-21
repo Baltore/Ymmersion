@@ -1,0 +1,27 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+
+# config/routes.yaml
+
+en_construction:
+    path: /en-construction
+    controller: App\Controller\DefaultController::enConstruction
+
+login:
+    path: /login
+    controller: App\Controller\SecurityController::login
+
+home:
+    path: /
+    controller: App\Controller\HomeController::home
+    methods: [GET]
+
+
+admin_dashboard:
+    path: /admin
+    controller: App\Controller\AdminController::index
+
+app_register:
+    path: /register
+    controller: App\Controller\RegistrationController::register

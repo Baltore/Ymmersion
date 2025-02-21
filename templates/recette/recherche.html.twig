@@ -1,0 +1,27 @@
+{% extends 'home.html.twig' %}
+
+{% block title %}Résultats de la recherche{% endblock %}
+
+{% block body %}
+    <h2>Résultats pour "{{ query }}"</h2>
+
+    {% if recettes is not empty %}
+        <div class="recette-grid">
+            {% for recette in recettes %}
+                <div class="recette-card">
+                    <a href="{{ path('recette_detail', { 'id': recette.id }) }}">
+                        {% if recette.imageName %}
+                            <img src="{{ asset('uploads/images/recettes/' ~ recette.imageName) }}" alt="{{ recette.titre }}">
+                        {% else %}
+                            <img src="{{ asset('/default.jpg') }}" alt="Image par défaut">
+                        {% endif %}
+                        <h3>{{ recette.titre }}</h3>
+                        <p>{{ recette.description|slice(0, 100) }}...</p>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <h1>Aucune recette ne correspond à votre recherche.</h1>
+    {% endif %}
+{% endblock %}

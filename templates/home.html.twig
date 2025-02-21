@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Recettes Délicieuses 2025</title>
+        <link rel="stylesheet" href="{{ asset('css/Acceuil.css') }}">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <header>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="{{ path('home') }}">Accueil</a></li>
+                    <li><a href="{{ path('ajouter_recette') }}">Ajouter une recette</a></li>
+                    <li><a href="{{ path('mes_recettes') }}">Mes Recettes</a></li>
+                    <li><a href="{{ path('filtrer_recettes') }}">Filtrer</a></li>
+                </ul>
+                <form action="{{ path('recherche_recette') }}" method="GET" class="search-form">
+                    <input type="text" name="query" placeholder="Rechercher une recette..." required>
+                    <button type="submit">Rechercher</button>
+                </form>
+                <div class="auth-links">
+                    {% if app.user %}
+                        <a href="{{ path('app_logout') }}">Déconnexion</a>
+                    {% else %}
+                        <a href="{{ path('app_login') }}">Connexion</a>
+                        <a href="{{ path('app_register') }}">Inscription</a>
+                    {% endif %}
+                </div>
+            </nav>
+        </header>
+
+        <main>
+            <div class="container-main">
+                {% if app.user %}
+                    <h2>Carnet de Recette de {{ app.user.userIdentifier }}</h2>
+                    <p style="margin-right: auto; padding: 10px 25px;">Voici les recettes que vous avez aimé :</p>
+                {% else %}
+                    <h2>Bienvenue sur notre site de recettes</h2>
+                    <p>Connectez-vous pour voir vos recettes favorites !</p>
+                {% endif %}
+
+                {# Affichage des recettes likées ou les plus populaires #}
+                {% if recettes is defined and recettes|length > 0 %}
+                <div class="recette-grid">
+                    {% for recette in recettes %}
+                        <div class="recette-card">
+                            {# Affichage de l'image (VichUploader) #}
+                            {% if recette.imageName %}
+                                <img src="{{ asset('uploads/images/recettes/' ~ recette.imageName) }}" alt="{{ recette.titre }}">
+                            {% else %}
+                                <img src="{{ asset('/default.jpg') }}" alt="Image par défaut">
+                            {% endif %}
+
+                            <div class="recette-content">
+                                <h3>{{ recette.titre }}</h3>
+                                <p>{{ recette.description }}</p>
+
+                                {# Ajout du temps de préparation et de cuisson #}
+                                <p><strong>Préparation :</strong> {{ recette.tempsPreparation }} min
+                                <strong class="space">Cuisson :</strong> {{ recette.tempsCuisson }} min</p>
+
+                                {# Afficher les ingrédients de la recette #}
+                                {% if recette.ingredients is defined and recette.ingredients|length > 0 %}
+                                    <h4>Ingrédients :</h4>
+                                    <ul>
+                                        {% for recetteIngredient in recette.ingredients %}
+                                            <li>{{ recetteIngredient.ingredient.nom }} - {{ recetteIngredient.quantite }} {{ recetteIngredient.unite }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% else %}
+                                    <p>Aucun ingrédient spécifié.</p>
+                                {% endif %}
+                                {# Bouton Like / Unlike #}
+                                <button class="like-button" data-recette-id="{{ recette.id }}">
+                                    {% if app.user and recette in app.user.likedRecettes %}
+                                        ❤️ <!-- Si déjà liké, affiche un cœur rouge -->
+                                    {% else %}
+                                        🤍 <!-- Si pas liké, affiche un cœur vide -->
+                                    {% endif %}
+                                </button>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p>Aucune recette trouvée.</p>
+                {% endif %}
+            </div>
+        </main>
+
+        <footer>
+            <h2> Bon appétit !</h2>
+            <p>&copy; 2025 Recettes Délicieuses. Tous droits réservés.</p>
+        </footer>
+
+        <script src="{{ asset('js/like.js') }}"></script>
+    </body>
+</html>

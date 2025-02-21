@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mes Recettes</title>
+    <link rel="stylesheet" href="{{ asset('css/recette.css') }}">
+</head>
+<body>
+
+    <header>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="{{ path('home') }}">Accueil</a></li>
+                <li><a href="{{ path('ajouter_recette') }}">Ajouter une recette</a></li>
+                <li><a href="{{ path('mes_recettes') }}">Mes Recettes</a></li>
+                <li><a href="{{ path('filtrer_recettes') }}">Filtrer</a></li>
+            </ul>
+            <form action="{{ path('recherche_recette') }}" method="GET" class="search-form">
+                <input type="text" name="query" placeholder="Rechercher une recette..." required>
+                <button type="submit">Rechercher</button>
+            </form>
+            <div class="auth-links">
+                {% if app.user %}
+                    <a href="{{ path('app_logout') }}">Déconnexion</a>
+                {% else %}
+                    <a href="{{ path('app_login') }}">Connexion</a>
+                    <a href="{{ path('app_register') }}">Inscription</a>
+                {% endif %}
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container-main">
+            <h2>Mes Recettes</h2>
+
+            {% if recettes is defined and recettes|length > 0 %}
+                <div class="recette-grid">
+                    {% for recette in recettes %}
+                        <div class="recette-card">
+                            <div class="card-inner">
+                                {# Face avant avec image et infos #}
+                                <div class="card-front">
+                                    {% if recette.imageName %}
+                                        <img src="{{ asset('uploads/images/recettes/' ~ recette.imageName) }}" alt="{{ recette.titre }}">
+                                    {% else %}
+                                        <img src="{{ asset('/default.jpg') }}" alt="Image par défaut">
+                                    {% endif %}
+
+                                    <div class="recette-content">
+                                        <h3>{{ recette.titre }}</h3>
+                                        <p>{{ recette.description }}</p>
+                                        <p><strong>Préparation :</strong> {{ recette.tempsPreparation }} min</p>
+                                        <p><strong>Cuisson :</strong> {{ recette.tempsCuisson }} min</p>
+                                    </div>
+                                </div>
+
+                                {# Face arrière avec les ingrédients #}
+                                <div class="card-back">
+                                    <h4>Ingrédients :</h4>
+                                    {% if recette.ingredients is defined and recette.ingredients|length > 0 %}
+                                        <ul>
+                                            {% for recetteIngredient in recette.ingredients %}
+                                                <li>{{ recetteIngredient.ingredient.nom }} - {{ recetteIngredient.quantite }} {{ recetteIngredient.unite }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% else %}
+                                        <p>Aucun ingrédient spécifié.</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>Aucune recette créée.</p>
+            {% endif %}
+
+            <div class="add-recipe-container">
+                <h3>Créer une nouvelle recette</h3>
+                <a href="{{ path('ajouter_recette') }}" class="btn btn-primary">Ajouter une recette</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Recettes Délicieuses. Tous droits réservés.</p>
+    </footer>
+
+</body>
+</html>

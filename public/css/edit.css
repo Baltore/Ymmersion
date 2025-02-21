@@ -1,0 +1,128 @@
+/* === STYLE GÉNÉRAL === */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* === HEADER === */
+header {
+    background-color: #222;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+/* === CONTENEUR PRINCIPAL === */
+.container {
+    width: 80%;
+    margin: 40px auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* === TITRE PRINCIPAL === */
+h1 {
+    text-align: center;
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+/* === FORMULAIRE === */
+
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+form label {
+    font-weight: bold;
+    margin: 10px 0 5px;
+    display: block;
+}
+
+form input,
+form select {
+    width: 80%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1em;
+    margin-bottom: 15px;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px; 
+    margin-top: 20px;
+}
+
+/* === BOUTONS D'ACTION === */
+a {
+    text-decoration: none;
+    font-weight: bold;
+}
+
+button {
+    background-color: #3341ff;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 1em;
+    border-radius: 20px;
+    transition: background 0.3s ease;
+    font-weight: bold;
+}
+
+
+
+/* Style pour le bouton Retour */
+.b {
+    display: inline-block;
+    background-color: #4b4b4b;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 1em;
+    border-radius: 20px;
+    transition: background 0.3s ease;
+    text-align: center;
+}
+
+.b:hover {
+    background-color: #444;
+}
+
+/* === RESPONSIVE DESIGN === */
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+    }
+
+    th, td {
+        padding: 8px;
+    }
+
+    button {
+        padding: 6px 10px;
+    }
+
+    form input,
+    form select {
+        width: 100%;
+    }
+}
+

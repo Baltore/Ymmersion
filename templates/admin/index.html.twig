@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administration</title>
+    
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Gestion des utilisateurs</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Pseudo</th>
+                    <th>Rôle</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.uuid }}</td>
+                        <td>{{ user.roles|join(', ') }}</td>
+                        <td>
+                            <a href="{{ path('admin_user_edit', {'id': user.id}) }}">Modifier</a> | 
+                            <form method="post" action="{{ path('admin_user_delete', {'id': user.id}) }}" style="display:inline;">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <button type="submit" onclick="return confirm('Confirmer la suppression ?')">Supprimer</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>

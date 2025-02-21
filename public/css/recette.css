@@ -1,0 +1,188 @@
+/* Styles généraux */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #fff4cc;
+    color: #000;
+    margin: 0;
+    padding: 0;
+}
+
+/* HEADER */
+header {
+    background-color: #fdecb0;
+    padding: 15px 0;
+    text-align: center;
+    width: 100%;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    max-width: initial;
+    margin: auto;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+}
+
+.nav-links a, .auth-links a {
+    color: #000000;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.auth-links {
+    display: flex;
+    gap: 10px;
+}
+
+.search-form {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.search-form input {
+    width: 300px;
+    padding: 8px;
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+.search-form button {
+    padding: 8px 12px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #f8d210;
+    border: none;
+    border-radius: 5px;
+}
+
+/* CONTAINER PRINCIPAL */
+.container-main {
+    text-align: center;
+    padding: 50px 0 10%;
+}
+
+/* GRILLE DES RECETTES */
+.recette-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5%;
+    margin-top: 50px;
+    margin-bottom: 100px;
+}
+
+/* FLIP CARD SYSTEM */
+.recette-card {
+    width: 260px;
+    height: 350px;
+    perspective: 1000px;
+}
+
+.card-inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+/* Faire tourner la carte au survol */
+.recette-card:hover .card-inner {
+    transform: rotateY(180deg);
+}
+
+/* Faces de la carte */
+.card-front, .card-back {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 15px;
+}
+
+/* Face avant (image et infos) */
+.card-front {
+    background-color: #fdecb0;
+    text-align: center;
+}
+
+.card-front img {
+    width: 150px; 
+    height: 150px;
+    object-fit: cover; 
+    border: groove;
+    border-color: #efd6a4;
+    border-radius: 10px;
+    display: block;
+    margin: auto;
+}
+
+/* Face arrière (ingrédients) */
+.card-back {
+    background-color: #fff4cc;
+    text-align: center;
+    transform: rotateY(180deg);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.card-back h4 {
+    margin-bottom: 10px;
+}
+
+.card-back ul {
+    list-style: none;
+    padding: 0;
+}
+
+.card-back li {
+    background: #fdecb0;
+    padding: 5px;
+    margin: 5px 0;
+    border-radius: 5px;
+}
+
+/* FORMULAIRE AJOUT RECETTE */
+.add-recipe-container {
+    margin-top: 40px;
+}
+
+.add-recipe-container a {
+    background-color: #f8d210;
+    color: #000;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.add-recipe-container a:hover {
+    background-color: #e5c10c;
+}
+
+/* FOOTER */
+footer {
+    text-align: center;
+    padding: 20px 0;
+    background-color: #fdecb0;
+    color: #000000;
+    width: 100%;
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 768px) {
+    .recette-grid {
+        flex-direction: column;
+        align-items: center;
+    }
+}
